@@ -12,6 +12,7 @@ public class Pacer : MonoBehaviour {
     private void Update(){
         float zNew = transform.position.z + direction * speed * Time.deltaTime;
 
+
         if(zNew >= zMax)
         {
             zNew = zMax;
@@ -23,7 +24,7 @@ public class Pacer : MonoBehaviour {
             direction *= -1;
         }
 
-        transform.position = new Vector3(7.5f, 0.75f, zNew);
+        transform.position = new Vector3(transform.position.x, transform.position.y, zNew);
 
     }
 }

@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public Text countText;
     public Text win;
+    public AudioClip pickupClip;
+    public AudioSource musicSource;
+    public AudioClip winClip;
+    public AudioSource musicSource2;
 
     private Rigidbody rb;
     private int count;
@@ -18,6 +22,9 @@ public class PlayerController : MonoBehaviour {
         count = 0;
         SetCOuntText();
         win.text = "";
+
+        musicSource.clip = pickupClip;
+        musicSource2.clip = winClip;
     }
 
 	void FixedUpdate() {
@@ -35,6 +42,7 @@ public class PlayerController : MonoBehaviour {
             other.gameObject.SetActive(false);
             count++;
             SetCOuntText();
+            musicSource.Play();
         }
 
     }
@@ -44,6 +52,7 @@ public class PlayerController : MonoBehaviour {
         if (count == 13)
         {
             win.text = "You Win";
+            musicSource2.Play();
         }
     }
 
