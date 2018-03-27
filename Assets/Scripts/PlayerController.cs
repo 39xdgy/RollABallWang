@@ -15,9 +15,16 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private int count;
-    
+    private Rigidbody ballRigibBody;
+    SteamVR_TrackedObject controller;
 
-	void Start() {
+    private void Awake()
+    {
+        this.controller = GetComponent<SteamVR_TrackedObject>();
+        this.ballRigibBody = GameObject.Find("Ball").GetComponent<Rigidbody>();
+    }
+
+    void Start() {
 		rb = GetComponent<Rigidbody> ();
         count = 0;
         SetCOuntText();
@@ -28,12 +35,17 @@ public class PlayerController : MonoBehaviour {
     }
 
 	void FixedUpdate() {
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
-
-		Vector3 movement = new Vector3 (moveHorizontal, 0, moveVertical);
-
-		rb.AddForce (movement * speed);
+        var device = SteamVR_Controller.Input((int)controller.index);
+        if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            var model = this.transform.Find("Model");
+            Transform trackpad = model.Find("trackpad").Find("attach");
+            Transform touch = model.Find("trackpad_touch").Find("attach");
+            Vector3 movement = (touch.position) - (trackpad.position);
+            movement = new Vector3(movement.x, 0, movement.z);
+            movement.Normalize();
+            this.ballRigibBody.AddForce(movement * speed);
+        }
 	}
 
     void OnTriggerEnter(Collider other){
