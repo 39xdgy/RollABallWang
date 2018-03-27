@@ -11,7 +11,7 @@ public class TrackPadMover : MonoBehaviour
     private void Awake()
     {
         this.controller = GetComponent<SteamVR_TrackedObject>();
-        this.ballRigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
+        this.ballRigidBody = GameObject.Find("Ball").GetComponent<Rigidbody>();
     }
     // Use this for initialization
     void Start()

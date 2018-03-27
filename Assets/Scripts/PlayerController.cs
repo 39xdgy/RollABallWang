@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
         musicSource.clip = pickupClip;
         musicSource2.clip = winClip;
     }
-
+    /**
 	void FixedUpdate() {
         var device = SteamVR_Controller.Input((int)controller.index);
         if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour {
             movement.Normalize();
             this.ballRigibBody.AddForce(movement * speed);
         }
-	}
+
+	}**/
 
     void OnTriggerEnter(Collider other){
         //       Destroy(other.gameObject);
