@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrackPadMover : MonoBehaviour
 {
     public float speed;
+    public float jump_Speed;
     private Rigidbody ballRigidBody;
     SteamVR_TrackedObject controller;
 
@@ -53,5 +54,13 @@ public class TrackPadMover : MonoBehaviour
 
 
         }
+
+        if(device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+        {
+            Vector3 jump_movement = new Vector3(0,jump_Speed,0);
+            this.ballRigidBody.AddForce(jump_movement * speed);
+        }
+
+
     }
 }
