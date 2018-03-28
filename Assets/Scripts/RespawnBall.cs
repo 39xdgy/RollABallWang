@@ -26,10 +26,11 @@ public class RespawnBall : MonoBehaviour {
     {
         var device = SteamVR_Controller.Input((int)controller.index);
 
-        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        if ((!device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger)) && device.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
         {
-            ballTransform.position = new Vector3(cameraHeadTransform.position.x, 0, cameraHeadTransform.position.z);
+            ballTransform.position = new Vector3(cameraHeadTransform.position.x, 1, cameraHeadTransform.position.z);
             ballRigidbody.velocity = new Vector3(0, 0, 0);
+            ballRigidbody.angularVelocity = new Vector3(0,0,0);
         }
     }
     // Update is called once per frame

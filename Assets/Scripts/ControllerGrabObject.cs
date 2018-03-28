@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ControllerGrabObject : MonoBehaviour {
-
+    public int shootForce;
+    public Camera Camera;
     private SteamVR_TrackedObject trackedObj;
     // 1
     private GameObject collidingObject;
     // 2
     private GameObject objectInHand;
+    private Rigidbody controllerRigidbody;
     private SteamVR_Controller.Device Controller
     {
         get { return SteamVR_Controller.Input((int)trackedObj.index); }
@@ -17,6 +19,7 @@ public class ControllerGrabObject : MonoBehaviour {
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
+        controllerRigidbody = this.GetComponent<Rigidbody>();
     }
 
     private void SetCollidingObject(Collider col)
@@ -88,6 +91,29 @@ public class ControllerGrabObject : MonoBehaviour {
         objectInHand = null;
     }
 
+    private void FixedUpdate()
+    {
+        // Shoot the ball functionality
+        if (objectInHand && Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            Vector3 CameraPosition = Camera.transform.position;
+            // find vector of controller
+            Vector3 controllerPosition = controllerRigidbody.position;
+
+            // calculate location
+            controllerPosition.x = controllerPosition.x - CameraPosition.x;
+            controllerPosition.y = controllerPosition.y - CameraPosition.y;
+            controllerPosition.z = controllerPosition.z - CameraPosition.z;
+            controllerPosition.Normalize();
+            Rigidbody ballRigidbody = objectInHand.GetComponent<Rigidbody>();
+
+            ReleaseObject();
+
+            // apply force
+            ballRigidbody.AddForce(controllerPosition * shootForce);
+
+        }
+    }
     // Update is called once per frame
     void Update () {
         // 1

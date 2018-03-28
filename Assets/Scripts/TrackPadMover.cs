@@ -47,7 +47,7 @@ public class TrackPadMover : MonoBehaviour
             // normalize vector to giveit a magnitude of 1
             // to control the velocity through the speed variable.
             movement.Normalize();
-            Debug.Log(movement);
+          
             // Add force to the ball
             this.ballRigidBody.AddForce(movement * speed);
             

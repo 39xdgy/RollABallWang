@@ -8,6 +8,7 @@ TagManager:
   - projectile
   - FxTemporaire
   - Baller
+  - Ball
   layers:
   - Default
   - TransparentFX
